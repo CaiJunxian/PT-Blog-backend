@@ -52,7 +52,9 @@ func (dao *Dao) FindArticles() []Article {
 func (dao *Dao) FindArticleById(id string) Article {
 	blogCollection := dao.session.DB(DbName).C(BlogCollection)
 	article := Article{}
-	query := blogCollection.FindId(id)
+	fmt.Print(id)
+	_id := bson.ObjectIdHex(id)
+	query := blogCollection.Find(bson.M{"_id": _id})
 	fmt.Print(query)
 	query.One(&article)
 	return article
