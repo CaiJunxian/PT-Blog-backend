@@ -10,6 +10,5 @@ type App struct {
 }
 
 func (c App) Test() revel.Result {
-	result := models.Result{"0", "success"}
-	return c.RenderJSON(result)
+	return c.RenderJSON(models.Success(nil))
 }

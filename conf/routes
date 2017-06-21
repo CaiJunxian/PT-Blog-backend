@@ -9,9 +9,11 @@ module:testrunner
 
 GET     /api/test                                       App.Test
 
-GET     /api/articles                               Article.GetArticleList
+GET     /api/articles                                   Article.GetArticleList
 
-GET     /api/articles/:id                           Article.GetArticle
+GET     /api/articles/:id                               Article.GetArticle
+
+POST     /api/articles                                   Article.CreateArticle
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

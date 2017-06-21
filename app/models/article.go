@@ -1,10 +1,10 @@
 package models
 
 import (
+	"fmt"
 	"github.com/revel/revel"
 	"gopkg.in/mgo.v2/bson"
 	"time"
-	"fmt"
 )
 
 type Article struct {
@@ -24,19 +24,6 @@ func (article *Article) Validate(v *revel.Validation) {
 	v.Check(article.Email, revel.Required{}, revel.MaxSize{50})
 	v.Email(article.Email)
 	v.Check(article.Subject, revel.Required{}, revel.MinSize{1})
-}
-
-// create a new article
-func (dao *Dao) CreateArticle(article *Article) error {
-	blogCollection := dao.session.DB(DbName).C(BlogCollection)
-	article.Id = bson.NewObjectId()
-	article.CDate = time.Now()
-	article.Year = article.CDate.Year()
-	_, err := blogCollection.Upsert(bson.M{"_id": article.Id}, article)
-	if err != nil {
-		revel.WARN.Printf("Unable to save blog: %v error %v", article, err)
-	}
-	return err
 }
 
 // find a list of article
@@ -74,4 +61,17 @@ func (article *Article) GetShortContent() string {
 		return article.Subject[:200]
 	}
 	return article.Subject
+}
+
+// create a new article
+func (dao *Dao) CreateArticle(article *Article) error {
+	blogCollection := dao.session.DB(DbName).C(BlogCollection)
+	article.Id = bson.NewObjectId()
+	article.CDate = time.Now()
+	article.Year = article.CDate.Year()
+	_, err := blogCollection.Upsert(bson.M{"_id": article.Id}, article)
+	if err != nil {
+		revel.WARN.Printf("Unable to save blog: %v error %v", article, err)
+	}
+	return err
 }
