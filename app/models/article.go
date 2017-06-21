@@ -18,7 +18,7 @@ type Article struct {
 	Year       int
 }
 
-// validate the submit article
+// validate the submitted article
 func (article *Article) Validate(v *revel.Validation) {
 	v.Check(article.Title, revel.Required{}, revel.MinSize{1}, revel.MaxSize{200})
 	v.Check(article.Email, revel.Required{}, revel.MaxSize{50})
@@ -47,7 +47,7 @@ func (dao *Dao) FindArticleById(id string) Article {
 	return article
 }
 
-// get short title of a blog
+// get short title of a article
 func (article *Article) GetShortTitle() string {
 	if len(article.Title) > 35 {
 		return article.Title[:35]
@@ -55,7 +55,7 @@ func (article *Article) GetShortTitle() string {
 	return article.Title
 }
 
-// get short content of a blog
+// get short content of a article
 func (article *Article) GetShortContent() string {
 	if len(article.Subject) > 200 {
 		return article.Subject[:200]
